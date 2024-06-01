@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: wabisabi
+  description: |-
+    [wabisabi](https://github.com/Phamiliarize/wabisabi) is a stand-alone micro-service for managing JWT-based sessions, written in GoLang.
+    
+    This API spec acts as a contract for interacting with `wabisabi` HTTP API.
+  license:
+    name: MIT
+    url: https://github.com/Phamiliarize/wabisabi/blob/main/LICENSE
+  version: 0.1.0
+externalDocs:
+  description: GitHub
+  url: https://github.com/Phamiliarize/wabisabi
+tags:
+  - name: session-management-api
+    description: REST API for managing sessions
+paths:
+  /api/session/create:
+    post:
+      tags:
+        - session-management-api
+      summary: Create a new session in the store
+      description: Create a new session in the store
+      operationId: createSession
+      requestBody:
+        description: Create a new session in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'          
+        '400':
+          description: Invalid input
+  /api/session/delete/token:
+    post:
+      tags:
+        - session-management-api
+      summary: Delete a session from the store by token ID
+      description: Delete a session from the store by token ID
+      operationId: deleteSessionByTokenID
+      requestBody:
+        description: Delete a session from the store by token ID
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'          
+        '400':
+          description: Invalid input
+  /api/session/delete/user:
+    post:
+      tags:
+        - session-management-api
+      summary: Delete all session from the store belonging to a user ID
+      description: Delete all session from the store belonging to a user ID
+      operationId: deleteSessionByUserID
+      requestBody:
+        description: Delete a session from the store by token ID
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'          
+        '400':
+          description: Invalid input
+  /api/session/validate:
+    post:
+      tags:
+        - session-management-api
+      summary: Validates a session by token ID
+      description: Validates a session by token ID
+      operationId: validateSession
+      requestBody:
+        description: Validates a session by token ID
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'          
+        '400':
+          description: Invalid input
+components:
+  schemas:
+    Session:
+      required:
+        - tokenId
+        - userId
+      type: object
+      properties:
+        tokenId:
+          type: string
+          format: uuid
+        sessionId:
+          type: string
+          format: uuid
+  requestBodies:
+    Session:
+      description: Session object that needs to be added to the datastore
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Session'
